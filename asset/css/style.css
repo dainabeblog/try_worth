@@ -1,4 +1,57 @@
 @charset "UTF-8";
+/* ローディング画面 */
+#loading {
+  width: 100vw;
+  height: 100vh;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  background-color: #10234C;
+  /* 以下のコードを追加 */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  margin: 200px auto;
+  background-color: #fff;
+  border-radius: 100%;
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+          animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+/* ローディングアニメーション */
+@-webkit-keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0;
+  }
+}
+@keyframes sk-scaleout {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
 body {
   font-family: "ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","メイリオ","Meiryo",sans-serif;
 }
@@ -79,6 +132,11 @@ body {
   background-image: url(../img/bg_blue.png);
   background-size: cover;
   background-repeat: repeat;
+}
+
+.bg_img_blue {
+  background-image: url(../img/bg_img_blue.png);
+  background-size: cover;
 }
 
 .arrowButton {
@@ -206,8 +264,17 @@ body {
 
 #header .wrap h1 {
   float: left;
-  width: 187px;
+  width: 125px;
   line-height: 100px;
+  height: 100px;
+}
+
+#header .wrap h1 img {
+  width: 100%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  position: relative;
+  top: 50%;
 }
 
 @media screen and (min-width: 768px) {
@@ -321,7 +388,8 @@ body {
   left: 0;
   display: block;
   width: 100%;
-  background: #f5f5f5;
+  background: #10234C;
+  color: #fdfdff;
   padding: 0 30px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -366,7 +434,7 @@ body {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: .1em;
-  color: #192f60;
+  color: #fdfdff;
   margin-top: 15px;
 }
 
@@ -391,8 +459,8 @@ body {
     content: "";
     width: 7px;
     height: 7px;
-    border-top: 2px solid #192f60;
-    border-right: 2px solid #192f60;
+    border-top: 2px solid #fdfdff;
+    border-right: 2px solid #fdfdff;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     position: absolute;
@@ -408,13 +476,12 @@ body {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: .1em;
-  color: #333333;
+  color: #fdfdff;
   vertical-align: top;
 }
 
 #header .wrap .g_nav > li dl dd li a:hover {
-  opacity: 1;
-  color: #192f60;
+  opacity: 0.7;
   text-decoration: none !important;
 }
 
@@ -425,6 +492,8 @@ body {
 @media screen and (max-width: 767px) {
   #header .wrap h1 {
     line-height: 50px;
+    width: 70px;
+    height: 50px;
   }
   #header .wrap .toggleMenu.active .menu-trigger span:nth-of-type(1) {
     -webkit-transform: translateY(7px) rotate(-45deg);
@@ -589,17 +658,17 @@ body {
 }
 
 .top_FV {
-  height: calc(100vh - 100px);
-  background-image: url(../img/bg_topFV.png);
-  background-size: cover;
-}
-
-.top_FV .inner {
-  position: relative;
+  width: 100%;
   height: 100%;
+  max-height: 100%;
+  position: relative;
 }
 
-.top_FV .inner .catch_cp {
+.top_FV .video_container {
+  overflow: hidden;
+}
+
+.top_FV .catch_cp {
   position: absolute;
   left: 0;
   bottom: 100px;
@@ -609,13 +678,13 @@ body {
   color: #192f60;
 }
 
-.top_FV .inner .catch_cp span {
+.top_FV .catch_cp span {
   position: relative;
   display: inline-block;
   z-index: 2;
 }
 
-.top_FV .inner .catch_cp span::before {
+.top_FV .catch_cp span::before {
   content: "";
   position: absolute;
   bottom: -5px;
@@ -626,7 +695,17 @@ body {
   z-index: -1;
 }
 
-.top_FV .inner .c-pagetop {
+.top_FV .mv_catch_cp {
+  position: absolute;
+  left: 10%;
+  bottom: 100px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.4em;
+  color: #fdfdff;
+}
+
+.top_FV .c-pagetop {
   position: absolute;
   background: none;
   color: #fff;
@@ -637,12 +716,12 @@ body {
   transform: translateY(-50px);
 }
 
-.top_FV .inner .c-pagetop .c-pagetop__button {
+.top_FV .c-pagetop .c-pagetop__button {
   text-decoration: none;
   position: relative;
 }
 
-.top_FV .inner .c-pagetop .c-pagetop__button span.is-text {
+.top_FV .c-pagetop .c-pagetop__button span.is-text {
   text-decoration: none;
   display: block;
   margin: 0 auto;
@@ -657,17 +736,17 @@ body {
   margin-bottom: 1.14286rem;
 }
 
-.top_FV .inner .c-pagetop .c-pagetop__button span.is-border {
+.top_FV .c-pagetop .c-pagetop__button span.is-border {
   display: block;
   height: 7.14286rem;
   position: relative;
   background: #fff;
   width: .07143rem;
-  margin: 0 auto 1.42857rem;
+  margin: 0 auto;
   overflow: hidden;
 }
 
-.top_FV .inner .c-pagetop .c-pagetop__button span.is-border:before {
+.top_FV .c-pagetop .c-pagetop__button span.is-border:before {
   position: absolute;
   content: "";
   display: block;
@@ -684,19 +763,20 @@ body {
   animation-name: scroll_top_ainm;
 }
 
-.top_FV .inner .c-pagetop.is-scroll {
+.top_FV .c-pagetop.is-scroll {
   bottom: -8.57143rem;
   z-index: 100;
+  width: 18px;
 }
 
 @media screen and (max-width: 767px) {
-  .top_FV {
-    height: calc(100vh - 50px);
-  }
   .top_FV .inner .catch_cp {
     position: absolute;
     left: 10px;
     bottom: 100px;
+    font-size: max(5.7vw,27.2px);
+  }
+  .top_FV .mv_catch_cp {
     font-size: max(5.7vw,27.2px);
   }
 }
@@ -731,6 +811,7 @@ body {
 
 .COMPANY .machining {
   background: url(../img/bg_company.png) no-repeat center top;
+  background: #fdfdff;
   background-size: cover;
 }
 
@@ -814,6 +895,7 @@ body {
 .COMPANY .content .flexCtr .campany_txt {
   font-size: 14.78473px;
   margin-bottom: 60px;
+  padding-right: 5%;
 }
 
 .COMPANY .content .rgt {
@@ -993,6 +1075,9 @@ body {
   .COMPANY .content .lft .machining_lst:before, .COMPANY .content .lft .machining_lst:after, .COMPANY .content .rgt .machining_lst:before, .COMPANY .content .rgt .machining_lst:after {
     width: calc(100% - 16px);
   }
+  .COMPANY .content .lft .machining_lst:nth-child(1) .machining_img, .COMPANY .content .rgt .machining_lst:nth-child(1) .machining_img {
+    background-position: 100% 20%;
+  }
   .COMPANY .content .lft .machining_lst .machining_link, .COMPANY .content .rgt .machining_lst .machining_link {
     outline: none;
   }
@@ -1138,6 +1223,34 @@ body {
 #news .homeNews .homeNews_content .homeNewsList .homeNewsList_item {
   margin-bottom: 40px;
   display: block;
+  position: relative;
+  padding: 10px;
+}
+
+#news .homeNews .homeNews_content .homeNewsList .homeNewsList_item::before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #10234C;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  z-index: -1;
+}
+
+#news .homeNews .homeNews_content .homeNewsList .homeNewsList_item:hover {
+  color: #e0e2e9;
+}
+
+#news .homeNews .homeNews_content .homeNewsList .homeNewsList_item:hover::before {
+  width: 100%;
+}
+
+#news .homeNews .homeNews_content .homeNewsList .homeNewsList_item:hover span {
+  border: 1px solid #fdfdff;
+  color: #fdfdff;
 }
 
 #news .homeNews .homeNews_content .homeNewsList .homeNewsList_item .homeNewsList_head {
@@ -1194,8 +1307,8 @@ body {
   }
   #news .homeNews .homeNews_content {
     display: block;
-    padding: 35px 8.9552238806% 0;
-    width: 89.3333333333%;
+    padding: 35px 3% 0;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -1208,7 +1321,7 @@ body {
         -ms-flex-pack: justify;
             justify-content: space-between;
     border-bottom: 1px solid #e0e2e9;
-    padding-bottom: 30px;
+    padding: 0 10px 30px 10px;
     margin-bottom: 30px;
   }
   #news .homeNews .homeNews_content .homeNews_head .headlineLv1 span.is-main {
@@ -1234,7 +1347,7 @@ body {
     padding-left: 0;
   }
   #news .homeNews .homeNews_content .homeNewsList .homeNewsList_item {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
   #news .homeNews .homeNews_content .homeNewsList .homeNewsList_item .homeNewsList_head {
     margin-bottom: 6px;
@@ -1289,7 +1402,6 @@ body {
 
 #service .inner .service_item .service_item_txt .case {
   padding-top: 20px;
-  margin-bottom: 60px;
   border-bottom: 1px solid #192f60;
   width: -webkit-fit-content;
   width: -moz-fit-content;
@@ -1304,7 +1416,7 @@ body {
 
 #service .inner .service_item .service_item_txt .service_item_title {
   font-size: 48px;
-  margin-bottom: 60px;
+  margin: 40px 0;
   line-height: 1.3;
 }
 
@@ -1400,6 +1512,7 @@ body {
   letter-spacing: -.02em;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  border: 1px solid #192f60;
 }
 
 #service .inner .arrowButton_blue i {
@@ -1475,6 +1588,9 @@ body {
   }
   #service .inner .service_item .service_item_img .service_item_imgBox::before {
     bottom: 30px;
+  }
+  #service .inner .service_item.service_item_even .service_item_txt {
+    padding: 0;
   }
   #service .inner .service_item.service_item_even .service_item_img {
     width: 100%;
@@ -1895,11 +2011,11 @@ footer .copy_right {
 }
 
 .underPage .inner .TxtImgComponent.img_left .TxtImgComponent_imgBox {
-  left: 60px;
+  left: 40px;
 }
 
 .underPage .inner .TxtImgComponent.img_left .TxtImgComponent_imgBox::before {
-  left: -60px;
+  left: -40px;
 }
 
 @media only screen and (max-width: 970px) {
@@ -1965,6 +2081,11 @@ footer .copy_right {
   }
 }
 
+#greeting .inner .TxtImgComponent .TxtImgComponent_img .TxtImgComponent_imgBox::before {
+  background: url(../img/greeting.png);
+  background-size: cover;
+}
+
 #corporate_philosophy {
   padding: 110px 0;
 }
@@ -2003,6 +2124,7 @@ footer .copy_right {
 #overview .overview_container .company-right {
   width: 80%;
   font-size: 17px;
+  line-height: 1.5;
 }
 
 #recruit {
@@ -2027,13 +2149,26 @@ footer .copy_right {
 
 @media only screen and (max-width: 970px) {
   #greeting {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
-}
-
-@media screen and (max-width: 767px) {
+  #greeting .TxtImgComponent {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+    margin-bottom: 0;
+  }
+  #greeting .TxtImgComponent .TxtImgComponent_title {
+    margin: 60px 0 20px;
+  }
+  #greeting .TxtImgComponent .TxtImgComponent_detail {
+    margin-bottom: 0;
+  }
   #corporate_philosophy {
     padding: 110px 0 50px;
+  }
+  #corporate_philosophy .TxtImgComponent_img {
+    display: none;
   }
   #overview {
     padding: 50px 0;
@@ -2072,6 +2207,33 @@ footer .copy_right {
   margin-bottom: 20px;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  position: relative;
+}
+
+#news_list .newcontainer .news_Item::before {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #10234C;
+  color: #fdfdff;
+  z-index: -1;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+#news_list .newcontainer .news_Item:hover {
+  color: #fdfdff;
+}
+
+#news_list .newcontainer .news_Item:hover::before {
+  width: 100%;
+}
+
+#news_list .newcontainer .news_Item:hover .category {
+  color: #fdfdff !important;
 }
 
 #news_list .newcontainer .news_Item .news_sub {
@@ -2328,7 +2490,7 @@ footer .copy_right {
 }
 
 #service_list .sevicec_ontainer .service_item:nth-child(1) a::after {
-  content: "調査";
+  content: "水中調査";
 }
 
 #service_list .sevicec_ontainer .service_item:nth-child(2) a::before {
@@ -2344,7 +2506,7 @@ footer .copy_right {
 }
 
 #service_list .sevicec_ontainer .service_item:nth-child(3) a::after {
-  content: "撮影";
+  content: "水中撮影";
 }
 
 #service_list .sevicec_ontainer .service_item:nth-child(4) a::before {
@@ -2352,7 +2514,7 @@ footer .copy_right {
 }
 
 #service_list .sevicec_ontainer .service_item:nth-child(4) a::after {
-  content: "空撮";
+  content: "ドローン空撮";
 }
 
 #customer_comments {
@@ -2368,15 +2530,15 @@ footer .copy_right {
 }
 
 #customer_comments .cc_item .cc_img {
-  width: 20%;
+  width: 50%;
 }
 
-#customer_comments .cc_item .cc_img img {
+#customer_comments .cc_item .cc_img video {
   width: 100%;
 }
 
 #customer_comments .cc_item .cc_txt {
-  width: 80%;
+  width: 50%;
   padding-left: 40px;
 }
 
@@ -2406,7 +2568,7 @@ footer .copy_right {
 
 @media screen and (max-width: 767px) {
   #service_list .sevicec_ontainer {
-    margin: 30px 0;
+    margin: 70px 0 30px;
   }
   #service_list .sevicec_ontainer .service_item {
     width: 100%;
@@ -2527,6 +2689,16 @@ footer .copy_right {
 #service_plan .plan_container .plan_item .plan_detail .plan_detail_item .plan_detail_item_right {
   width: 70%;
   padding-left: 20px;
+}
+
+.appeal_Button {
+  margin-top: 100px;
+}
+
+.appeal_Button .arrowButton {
+  border: solid 1px #10234C;
+  padding: 20px 250px;
+  font-size: 24px;
 }
 
 #service_achievements {

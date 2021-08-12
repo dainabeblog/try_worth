@@ -58,12 +58,12 @@ body {
 
 @font-face {
   font-family: Karla;
-  src: url( ../../font/Karla/Karla-VariableFont_wght.ttf) format("truetype");
+  src: url( ../font/Karla/Karla-VariableFont_wght.ttf) format("truetype");
 }
 
 @font-face {
   font-family: Karla_Italic;
-  src: url( ../../font/Karla/Karla-Italic-VariableFont_wght.ttf) format("truetype");
+  src: url( ../font/Karla/Karla-Italic-VariableFont_wght.ttf) format("truetype");
 }
 
 .Karla {
